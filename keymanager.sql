@@ -1,14 +1,3 @@
-
-PRAGMA foreign_keys = ON;  
-
-DROP TABLE IF EXISTS Notification;
-DROP TABLE IF EXISTS KeyRequest;
-DROP TABLE IF EXISTS KeyTransaction;
-DROP TABLE IF EXISTS Key;
-DROP TABLE IF EXISTS Room;
-DROP TABLE IF EXISTS User;
-
-
 CREATE TABLE User (
     Id           INTEGER PRIMARY KEY AUTOINCREMENT,
     FullName     TEXT NOT NULL,
@@ -96,3 +85,5 @@ INSERT INTO KeyRequest (UserId, KeyId, Reason, PlannedFrom, PlannedTo)
 VALUES (2, 1, 'Сабақ өткізу', '2026-10-09 10:00:00', '2026-10-09 12:00:00');
 
 INSERT INTO Notification (UserId, Message) VALUES (2, 'Вам выдан ключ K-035');
+
+
