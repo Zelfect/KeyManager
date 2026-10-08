@@ -92,6 +92,8 @@ INSERT INTO Key (KeyNumber, RoomId, QrCode) VALUES ('K-035', 1, 'QR-K035');
 INSERT INTO KeyTransaction (KeyId, UserId, IssuedByUserId, ExpectedReturnAt, Reason)
 VALUES (1, 2, 1, datetime('now', '+2 hours'), 'Сабақ өткізу');
 
+//Ok
+
 INSERT INTO KeyRequest (UserId, KeyId, Reason, PlannedFrom, PlannedTo)
 VALUES (2, 1, 'Сабақ өткізу', '2026-10-09 10:00:00', '2026-10-09 12:00:00');
 
