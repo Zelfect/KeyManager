@@ -1,5 +1,3 @@
--- KeyManager — база данных SQLite по Class-диаграмме
--- Запуск:  sqlite3 keymanager.db < keymanager.sql
 
 PRAGMA foreign_keys = ON;   -- без этого каскад в SQLite не работает
 
