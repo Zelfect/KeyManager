@@ -1,5 +1,5 @@
 
-PRAGMA foreign_keys = ON;   -- без этого каскад в SQLite не работает
+PRAGMA foreign_keys = ON;  
 
 DROP TABLE IF EXISTS Notification;
 DROP TABLE IF EXISTS KeyRequest;
@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS Key;
 DROP TABLE IF EXISTS Room;
 DROP TABLE IF EXISTS User;
 
--- User  (enum UserRole: Admin, Employee, Manager)
+
 CREATE TABLE User (
     Id           INTEGER PRIMARY KEY AUTOINCREMENT,
     FullName     TEXT NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE User (
     Department   TEXT
 );
 
--- Room
+
 CREATE TABLE Room (
     Id         INTEGER PRIMARY KEY AUTOINCREMENT,
     RoomNumber TEXT NOT NULL,
@@ -27,8 +27,7 @@ CREATE TABLE Room (
     Floor      INTEGER
 );
 
--- Key  (enum KeyStatus: Available, Issued, Overdue, Blocked)
--- Room 1 --- 1..* Key
+
 CREATE TABLE Key (
     Id        INTEGER PRIMARY KEY AUTOINCREMENT,
     KeyNumber TEXT NOT NULL UNIQUE,
@@ -39,16 +38,15 @@ CREATE TABLE Key (
     FOREIGN KEY (RoomId) REFERENCES Room(Id) ON DELETE CASCADE
 );
 
--- KeyTransaction  (enum TransactionStatus: Active, Returned, Overdue)
--- Key 1 --- 0..* KeyTransaction,  User 1 --- 0..* KeyTransaction
+
 CREATE TABLE KeyTransaction (
     Id               INTEGER PRIMARY KEY AUTOINCREMENT,
     KeyId            INTEGER NOT NULL,
-    UserId           INTEGER NOT NULL,      -- кто взял ключ
-    IssuedByUserId   INTEGER NOT NULL,      -- кто выдал (админ)
+    UserId           INTEGER NOT NULL,      
+    IssuedByUserId   INTEGER NOT NULL,      
     IssuedAt         TEXT NOT NULL DEFAULT (datetime('now')),
     ExpectedReturnAt TEXT NOT NULL,
-    ReturnedAt       TEXT,                  -- DateTime? = может быть NULL
+    ReturnedAt       TEXT,                  
     Reason           TEXT,
     Status           TEXT NOT NULL DEFAULT 'Active'
                      CHECK (Status IN ('Active', 'Returned', 'Overdue')),
@@ -57,8 +55,7 @@ CREATE TABLE KeyTransaction (
     FOREIGN KEY (IssuedByUserId) REFERENCES User(Id) ON DELETE CASCADE
 );
 
--- KeyRequest  (enum RequestStatus: Pending, Approved, Rejected)
--- User 1 --- 0..* KeyRequest,  Key 1 --- 0..* KeyRequest
+
 CREATE TABLE KeyRequest (
     Id          INTEGER PRIMARY KEY AUTOINCREMENT,
     UserId      INTEGER NOT NULL,
@@ -72,8 +69,7 @@ CREATE TABLE KeyRequest (
     FOREIGN KEY (KeyId)  REFERENCES Key(Id)  ON DELETE CASCADE
 );
 
--- Notification
--- User 1 --- 0..* Notification
+
 CREATE TABLE Notification (
     Id        INTEGER PRIMARY KEY AUTOINCREMENT,
     UserId    INTEGER NOT NULL,
@@ -83,7 +79,7 @@ CREATE TABLE Notification (
     FOREIGN KEY (UserId) REFERENCES User(Id) ON DELETE CASCADE
 );
 
--- Тестовые данные
+
 INSERT INTO User (FullName, Email, PasswordHash, Role, Department) VALUES
  ('Админ', 'admin@univ.kz',   'hash1', 'Admin',    'Хоз. отдел'),
  ('Ержан', 'yerzhan@univ.kz', 'hash2', 'Employee', 'Информатика');
